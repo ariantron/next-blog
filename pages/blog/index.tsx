@@ -1,11 +1,6 @@
 import Link from "next/link"
-import Head from "next/head";
-
-interface Post {
-    slug: string;
-    title: string;
-    content: string;
-}
+import Post from "@/app/interfaces/post";
+import Constants from "@/app/constants";
 
 export default function Blog({posts}: { posts: Post[] }) {
     return (
@@ -27,7 +22,7 @@ export default function Blog({posts}: { posts: Post[] }) {
 }
 
 export async function getStaticProps() {
-    const response = await fetch("https://raw.githubusercontent.com/ariantron/next-blog/master/data/posts.json")
+    const response = await fetch(Constants().POSTS_API_URL)
     const data = await response.json()
 
     return {
