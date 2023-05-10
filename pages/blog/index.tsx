@@ -26,7 +26,7 @@ export default function Blog({posts}: { posts: Post[] }) {
 }
 
 export async function getStaticProps() {
-    const response = await fetch("https://api.slingacademy.com/v1/sample-data/blog-posts")
+    const response = await fetch("https://raw.githubusercontent.com/ariantron/next-blog/master/data/posts.json")
     const data = await response.json()
 
     return {
