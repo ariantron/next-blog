@@ -3,6 +3,7 @@ import {useRouter} from "next/router";
 import styles from "../../styles/post.module.css";
 import Post from "@/app/interfaces/post";
 import Constants from "@/app/constants";
+import Image from "next/image";
 
 export default function Post({post}: { post: Post }) {
     const router = useRouter();
@@ -14,7 +15,13 @@ export default function Post({post}: { post: Post }) {
                 </Link>
             </p>
             <h2 className={styles.title}>{post.title}</h2>
-            <img src={post.image_url} alt={post.title}/>
+            <Image
+                src={post.image_url}
+                alt={post.title}
+                width={1024}
+                height={768}
+                loading="lazy" //default
+            />
             <p>{post.content}</p>
             <button className={styles.button} onClick={() => router.push("/blog")}>
                 Click me to programmatically navigate or redirect
@@ -27,8 +34,8 @@ export async function getStaticPaths() {
     const response = await fetch(Constants().POSTS_API_URL);
     const data = await response.json();
 
-    const thePaths = data.posts.map((pet: { slug: string }) => {
-        return {params: {slug: pet.slug}};
+    const thePaths = data.posts.map((post: { slug: string }) => {
+        return {params: {slug: post.slug}};
     });
 
     return {
@@ -42,9 +49,7 @@ export async function getStaticProps(context: {
 }) {
     const response = await fetch(Constants().POSTS_API_URL);
     const data = await response.json();
-    const thePost = data.posts.filter(
-        (post: { slug: string }) => post.slug === context.params.slug
-    )[0];
+    const thePost = data.posts.filter((post: { slug: string }) => post.slug === context.params.slug)[0];
 
     return {
         props: {
