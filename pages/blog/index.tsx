@@ -1,4 +1,5 @@
 import Link from "next/link"
+import Head from "next/head";
 
 interface Post {
     slug: string;
@@ -16,7 +17,7 @@ export default function Blog({posts}: { posts: Post[] }) {
                         <h3>
                             <Link href={`/blog/${post.slug}`}>{post.title}</Link>
                         </h3>
-                        <p>{post.content}</p>
+                        <p>{post.content.substring(0,100)}...</p>
                         <hr/>
                     </div>
                 )
@@ -31,7 +32,8 @@ export async function getStaticProps() {
 
     return {
         props: {
-            posts: data.posts
+            posts: data.posts,
+            title: "Blog"
         }
     }
 }

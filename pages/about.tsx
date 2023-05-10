@@ -1,6 +1,13 @@
+import Head from "next/head";
+
 export default function About() {
     return (
         <>
+            <Head>
+                <title>
+                    Next Blog | About Us
+                </title>
+            </Head>
             <h2>About Us</h2>
             <p>
                 Next.js is a powerful and versatile software development framework that has been making waves in the
